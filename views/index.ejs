@@ -1,0 +1,52 @@
+<% include partials/header %>
+  <div class="container-fluid">
+    <form class="form-inline">
+      <div class="form-group">
+        <i class="fa fa-search"></i>
+        <input class="form-control">
+      </div>
+    </form>
+    <div class="row">
+      <div class="col-md-8 p-0">
+        <iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBhc6RGgSeMqAsANroNNJ3R8YszdUWvBy4&q=Miami">
+        </iframe>
+      </div>
+
+      <div class="col-md-4 p-0 results center-block">
+        <% data.forEach(function(element){ %>
+          <div class="card my-4">
+            <div class="card-body">
+              <h3 class="card-title">
+                <%= element.type %>
+              </h3>
+            </div>
+
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <%= element.zipCode %>, <%= element.city %>
+              </li>
+              <li class="list-group-item">
+                $
+                <%= element.price %>.00
+              </li>
+              <li class="list-group-item">
+                <%= element.description %> sqft
+              </li>
+              </ul>
+              <ul class="list-inline">
+                  <li class="list-inline-item"><i class="fa fa-3x fa-umbrella" aria-hidden="true"></i></li>
+                  <li class="list-inline-item"><i class="fa fa-3x fa-lock" aria-hidden="true"></i></li>
+                  <li class="list-inline-item"><i class="fa fa-3x fa-video-camera" aria-hidden="true"></li>
+                  <li class="list-inline-item"><i class="fa fa-3x fa-lightbulb-o" aria-hidden="true"></i></li>
+              </ul>
+
+              
+              <%= element.createdAt %>
+            
+          </div>
+          <% }) %>
+      </div>
+
+    </div>
+
+    <% include partials/footer %>

@@ -1,3 +1,27 @@
 .list-group-item {
   line-height: 2.5;
 }
+
+
+iframe{
+  min-width: 100%;
+  min-height: 100%;
+}
+
+body{
+  padding-top:60px;
+}
+
+/* .fa{
+  color: green;
+} */
+
+row{
+  max-height: 100%
+}
+
+.results{
+  max-height: 100%;
+  overflow: scroll
+}
+
