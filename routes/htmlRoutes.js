@@ -2,25 +2,39 @@ var db = require("../models");
 
 module.exports = function (app) {
   // Load index page
+  function getPromise(space, spaces) {
+    console.log("It is")
+    return new Promise(function (resolve, reject) {
+      db.SpaceFeatures.findAll({
+        where: {
+          spaceId: space.id
+        }
+      }).then(function (results) {
+        spaces[space.id] = { space: space, features: results };
+        resolve(space);
+      });
+    });
+  }
+
   app.get("/spaces", function (req, res) {
+    var spaces = {};
     db.Space.findAll({}).then(function (data) {
-      console.log(data);
+      // console.log(data);
       if (data) {
-        data.forEach(function (e) {
-          db.SpaceFeatures.findAll({
-            where: {
-              spaceId: e.id
-            }
-          }).then(function (results) {
-            console.log(results);
-          }
-          );
+        var features = [];
+        var spaces = {};
+        Promise.all(data.map(space => getPromise(space, spaces))).then(function () {
+          // res.json(spaces)
+          // console.log(typeof spaces)
+          res.render("index",spaces);
         });
+
+
+
 
       }
 
       // res.json(data);
-      res.render("index",{data: data});
     });
   });
 

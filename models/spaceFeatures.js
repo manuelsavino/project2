@@ -4,9 +4,10 @@ module.exports = function (sequelize, DataTypes) {
     var SpaceFeatures = sequelize.define("SpaceFeatures", {
         featureID: {
             type: DataTypes.INTEGER,
-            autoIncrement: false
+            autoIncrement: false,
         }
     });
+    
     SpaceFeatures.associate= function(models){
         models.SpaceFeatures.belongsTo(models.Space,{
             foreingKey: {
