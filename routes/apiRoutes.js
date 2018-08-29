@@ -11,7 +11,7 @@ module.exports = function(app) {
 
   //create a new space and link spaces to features (not working yet)
   app.post("/api/space", function(req, res){
-    // console.log(req.body);
+    console.log(req.body);
     db.Space.create({
                 type: req.body.type,
                 zipCode: req.body.zipCode,
