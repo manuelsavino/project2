@@ -1,3 +1,38 @@
-.list-group-item {
-  line-height: 2.5;
+
+
+
+body{
+  padding-top:60px;
+}
+
+.fa{
+  color: #00cec9;
+}
+
+
+
+.results{
+  max-height: 87vh;
+  overflow: scroll
+}
+
+
+#map {
+  height: 87vh;
+  width: 100%;
+  background-color: grey;
+  position: relative;
+  margin: auto 0;
+}
+/* Optional: Makes the sample page fill the window. */
+
+.icon-center{
+  margin:0 auto;
+}
+
+
+
+.features{
+  display: inline;
+  text-align: center;
 }

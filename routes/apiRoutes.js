@@ -1,24 +1,42 @@
 var db = require("../models");
 
 module.exports = function(app) {
-  // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
+
+  //create a new feature
+  app.post("/api/feature", function(req,res){
+    db.Feature.create(req.body).then(function(result){
+      res.sendStatus(200);
     });
   });
 
-  // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
-
-  // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.json(dbExample);
+  //create a new space and link spaces to features (not working yet)
+  app.post("/api/space", function(req, res){
+    console.log(req.body);
+    db.Space.create({
+                type: req.body.type,
+                zipCode: req.body.zipCode,
+                lat: req.body.lat,
+                lon: req.body.lon,
+                city: req.body.city,
+                description: req.body.description,
+                sqFootage: req.body.sqFootage,
+                price: req.body.price
+    }).then(function(result){
+      var features = req.body.features;
+      if(features){
+      features.forEach(function(element){
+        db.SpaceFeatures.create({
+          featureID: element,
+          SpaceId: result.dataValues.id,
+        }).then(function(){
+          res.sendStatus(200);
+        });
+      });
+    }else{
+      res.sendStatus(200);
+    }
     });
   });
 };
+
+
