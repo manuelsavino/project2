@@ -32,7 +32,7 @@ $(function(){
             };
 
             $.post("/api/space",spaceInfo).then(function(){
-                $(location).attr("href", "/spaces");
+                $(location).attr("href", "/space");
             });
         })
     });
@@ -46,7 +46,7 @@ $("#addNewFeature").on("click", function(event){
 
     $.post("/api/feature",newFeature).then(function(){
         console.log("test")
-        $(location).attr("href", "/spaces");
+        $(location).attr("href", "/space");
     });
 })
 

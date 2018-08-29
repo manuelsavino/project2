@@ -15,15 +15,12 @@ module.exports = function (app) {
     });
   }
 
-  app.get("/spaces", function (req, res) {
+  app.get("/space", function (req, res) {
     var featuresIcon = ["",
     {icon: "fa-umbrella", text: "Covered"},
     {icon: "fa-lock", text: "Secuirty"},
     {icon: "fa-video-camera", text: "Cameras"},
     {icon: "fa-lightbulb-o", text: "Lit"},]
-
-
-
     db.Space.findAll({}).then(function (data) {
       if (data[0].id) {
         var features = [];
@@ -42,7 +39,7 @@ module.exports = function (app) {
     });
   });
 
-  app.get("/spaces/json", function (req, res) {
+  app.get("/space/json", function (req, res) {
     db.Space.findAll({}).then(function (data) {
       if (data) {
         var features = [];
@@ -58,7 +55,7 @@ module.exports = function (app) {
     });
   });
 
-  app.get("/spaces/new", function (req, res) {
+  app.get("/space/new", function (req, res) {
     db.Feature.findAll({}).then(function (features) {
       res.render("newSpace", { features: features });
     });
@@ -75,8 +72,31 @@ module.exports = function (app) {
   //add new space form
 
   //Add new Feature Form
-  app.get("/features/new", function (req, res) {
+  app.get("/feature/new", function (req, res) {
     res.render("addFeature");
+  });
+
+
+  //View one space
+  app.get("/space/:id", function(req, res){
+    var featuresIcon = ["",
+    {icon: "fa-umbrella", text: "Covered"},
+    {icon: "fa-lock", text: "Secuirty"},
+    {icon: "fa-video-camera", text: "Cameras"},
+    {icon: "fa-lightbulb-o", text: "Lit"},]
+    db.Space.findAll({
+      where: {id : req.params.id}
+    }).then(function (data) {
+      if (data[0].id) {
+        var spaces = [];
+        Promise.all(data.map(space => getPromise(space, spaces))).then(function () {
+          // res.json({space: spaces, featuresIcon:featuresIcon, markers: markers})
+          res.render("space",{space: spaces, featuresIcon:featuresIcon});
+        });
+      }
+
+    });
+
   });
 
 

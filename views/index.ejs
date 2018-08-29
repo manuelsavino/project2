@@ -31,7 +31,7 @@
                   <%= element.space.description %>
                 </li>
               </ul>
-              <h5 class="card-header">Features</h5>
+              <h4 class="pt-4">Features</h4>
 
               <% /*var featuresIcon = ["","fa-umbrella","fa-lock", "fa-video", "fa-lightbulb-o"]*/ %>
               <table class="mt-2">
@@ -44,7 +44,7 @@
                 </table>
                     <!-- Posted: -->
                     <%=/* element.space.createdAt */%>
-                      <a class="btn btn-primary" href="#">Space Details</a>
+                      <a class="btn btn-primary d-block" href="/space/<%= element.space.id%>">Space Details</a>
             </div>
           </div>
           <% }) %>
