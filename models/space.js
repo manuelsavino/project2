@@ -44,8 +44,8 @@ module.exports = function (sequelize, DataTypes){
 
 
     Space.associate = function(models){
-        Space.hasMany(models.Feature)
-    }
+        Space.hasMany(models.Feature);
+    };
 
     return Space;
 };

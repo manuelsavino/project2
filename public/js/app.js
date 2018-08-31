@@ -30,8 +30,6 @@ $(function(){
                 price: price,
                 features: featureList
             };
-
-            console.log(spaceInfo)
             $.post("/api/space",spaceInfo).then(function(){
                 $(location).attr("href", "/space");
             });
