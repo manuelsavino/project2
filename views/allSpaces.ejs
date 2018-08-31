@@ -1,0 +1,255 @@
+<% include partials/header %>
+  <div class="container-fluid">
+    <form class="form-inline">
+      <div class="form-group">
+        <i class="fa fa-search"></i>
+        <input class="form-control noOutline border-0">
+      </div>
+    </form>
+    <div class="row mt-2">
+      <div class="col-md-4 p-0 results center-block">
+        <% space.forEach(function(element){ %>
+          <div class="card mb-4 mx-auto" style="width: 33rem">
+            <div class="card-body">
+              <h3 class="card-title">
+                <%= element.type %>
+              </h3>
+
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <%= element.city %> area
+                </li>
+                <li class="list-group-item">
+
+                  $
+                  <%= element.price %>.00
+                </li>
+                <li class="list-group-item">
+                  <%= element.sqft %> sqft
+                </li>
+                <li class="list-group-item">
+                  <%= element.description %>
+                </li>
+              </ul>
+              <h4 class="pt-4">Features</h4>
+
+
+              <table class="mt-2">
+                <% for(var i=0; i < element.Features.length; i++){ %>
+                  <table class="features mr-2">
+                    <tr>
+                      <td><span class="fa <%= element.Features[i].icon %> fa-4x "></span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <h5 class="text-center">
+                          <%= element.Features[i].name %>
+                        </h5>
+                      </td>
+                    </tr>
+                  </table>
+                  <% } %>
+              </table>
+              <!-- Posted: -->
+              <a class="btn btn-primary d-block" href="/space/<%= element.spaceId %>">Space Details</a>
+            </div>
+          </div>
+          <% }) %>
+      </div>
+      <div class="col-md-8 p-0">
+        <div class="mx-auto" id="map"></div>
+      </div>
+    </div>
+    <script>
+      var lat;
+      var lon;
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(positionReceived)
+      }
+
+      function positionReceived(position) {
+        lat = position.coords.latitude
+        lon = position.coords.longitude
+      }
+
+      function initMap() {
+        if (lat || lon) {
+          var center = { lat: lat, lng: lon };
+        } else {
+          var center = { lat: <%= space[0].lat %>, lng: <%= space[0].lon %>};
+        }
+
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: center,
+          zoom: 8,
+          styles: [
+    {
+        "featureType": "all",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "color": "#ffffff"
+            }
+        ]
+    },
+    {
+        "featureType": "all",
+        "elementType": "labels.text.stroke",
+        "stylers": [
+            {
+                "color": "#000000"
+            },
+            {
+                "lightness": 13
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#000000"
+            }
+        ]
+    },
+    {
+        "featureType": "administrative",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#144b53"
+            },
+            {
+                "lightness": 14
+            },
+            {
+                "weight": 1.4
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#08304b"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#0c4152"
+            },
+            {
+                "lightness": 5
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#000000"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#0b434f"
+            },
+            {
+                "lightness": 25
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#000000"
+            }
+        ]
+    },
+    {
+        "featureType": "road.arterial",
+        "elementType": "geometry.stroke",
+        "stylers": [
+            {
+                "color": "#0b3d51"
+            },
+            {
+                "lightness": 16
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "color": "#000000"
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#146474"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#021019"
+            }
+        ]
+    }
+]
+        })
+        var markers = <%- JSON.stringify(markers) %>;
+
+        var infowindow = new google.maps.InfoWindow({});
+        var marker, count;
+
+        var fire = "https://i.imgur.com/gMz9WrT.png"
+        for (count = 0; count < markers.length; count++) {
+          marker = new google.maps.Marker({
+            position: new google.maps.LatLng(markers[count][1], markers[count][2]),
+            map: map,
+            title: markers[count][0],
+            icon: fire,
+
+
+          });
+          google.maps.event.addListener(marker, 'click', (function (marker, count) {
+            return function () {
+              infowindow.setContent(markers[count][0]);
+              infowindow.open(map, marker);
+            }
+          })(marker, count));
+        }
+
+      }
+    </script>
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap" async defer></script>
+
+
+    <% include partials/footer %>
