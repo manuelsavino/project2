@@ -1,42 +1,28 @@
 var db = require("../models");
 
-module.exports = function(app) {
-
-  //create a new feature
-  app.post("/api/feature", function(req,res){
-    db.Feature.create(req.body).then(function(result){
-      res.sendStatus(200);
-    });
-  });
-
-  //create a new space and link spaces to features (not working yet)
-  app.post("/api/space", function(req, res){
-    console.log(req.body);
-    db.Space.create({
-                type: req.body.type,
-                zipCode: req.body.zipCode,
-                lat: req.body.lat,
-                lon: req.body.lon,
-                city: req.body.city,
-                description: req.body.description,
-                sqFootage: req.body.sqFootage,
-                price: req.body.price
-    }).then(function(result){
-      var features = req.body.features;
-      if(features){
-      features.forEach(function(element){
-        db.SpaceFeatures.create({
-          featureID: element,
-          SpaceId: result.dataValues.id,
-        }).then(function(){
-          res.sendStatus(200);
-        });
-      });
-    }else{
-      res.sendStatus(200);
-    }
-    });
-  });
-};
+module.exports = function (app) {
+    app.post("/api/space/", function (req, res) {
+        var features = req.body.features;
+        db.Space.create({
+            type: req.body.type,
+            zipcode: req.body.zipCode,
+            lat: req.body.lat,
+            lon: req.body.lon,
+            price: req.body.price,
+            description: req.body.price,
+            sqft: req.body.sqft,
+            city: req.body.city,
+        }).then(function (result) {
+            for(var i = 0; i < features.length; i++)
+            {
+                features[i].SpaceSpaceId = result.spaceId
+            }
+            db.Feature.bulkCreate(features).then(function (result) {
+                res.sendStatus(200)
+            })
 
 
+
+        })
+    })
+}
