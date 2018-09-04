@@ -1,6 +1,6 @@
 $(function(){
 
-    //Handles adding a new space (need to figure out how to pass feature id's)
+    //Handles adding a new space 
     $("#submitNewSpace").on("click", function(event){
         event.preventDefault();
         var zipCode = $("#zipCode").val().trim();
@@ -13,6 +13,7 @@ $(function(){
         {
             featureList.push({name: $(this).val(), icon: $(this).attr("data-icon") })
         })
+
         console.log(zipCode)
         //requrest to get lon and lat based on zipcode entered
         $.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${zipCode}&key=AIzaSyBhc6RGgSeMqAsANroNNJ3R8YszdUWvBy4`).then(function(data){
