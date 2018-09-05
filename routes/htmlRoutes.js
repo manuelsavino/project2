@@ -1,4 +1,5 @@
-var db = require("../models");
+const db = require("../models");
+const { zipCodeSearch } = require("../lib")
 
 module.exports = function (app) {
 
@@ -35,6 +36,14 @@ module.exports = function (app) {
     app.get("*", function(req,res){
         res.render("404")
     })
+
+    app.get("/space/search", function (req, res) {
+        const {search} = req.query
+        const zipCodes = zipCodeSearch(search,15)
+        return db.Space.findAllByZipCode().then(spaces => {
+            res.render
+        })
+    }
 
 
 }
