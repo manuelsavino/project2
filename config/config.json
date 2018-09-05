@@ -16,7 +16,7 @@
     "logging": false
   },
   "production": {
-    "use_env_variable": "gtizpe105piw2gfq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    "host": "gtizpe105piw2gfq.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     "dialect": "mysql",
     "username": "n8mhad5eoapqu2ax",
     "password": "f3740hj7rba7bihi",
