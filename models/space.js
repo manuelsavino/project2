@@ -1,3 +1,5 @@
+const { Op } = require('sequelize')
+
 module.exports = function (sequelize, DataTypes){
     
     var Space = sequelize.define("Space",{
@@ -47,5 +49,16 @@ module.exports = function (sequelize, DataTypes){
         Space.hasMany(models.Feature);
     };
 
+    Space.findAllByZipCode = function findAllByZipCode(zipcodes) {
+        return sequelize.models.Space.findAll({
+            where: { zipcode: {[Op.in]: zipcodes}},
+            include: [
+                {
+                    model: sequelize.models.Feature
+                }
+            ]
+        });
+    };
+    
     return Space;
 };

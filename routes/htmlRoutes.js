@@ -1,6 +1,11 @@
-var db = require("../models");
+const db = require("../models");
+
 
 module.exports = function (app) {
+
+    app.get("/", function(req,res){
+        res.render("home");
+    });
 
     app.get("/space", function (req, res) {
         db.Space.findAll({ include: db.Feature }).then(function (result) {
@@ -19,22 +24,18 @@ module.exports = function (app) {
     });
 
 
-    app.get("/space/json", function (req, res) {
-        db.Space.findAll({ include: db.Feature }).then(function (result) {
-            res.json(result);
-        });
-    });
-
     app.get("/space/:id", function (req, res) {
         db.Space.findAll({ where: { spaceId: req.params.id }, include: db.Feature }).then(function (result) {
-            res.json(result);
+            res.render("space", {space: result});
         });
     });
 
-  
+
     app.get("*", function(req,res){
-        res.render("404")
-    })
+        res.render("404");
+    });
+
+    
 
 
-}
+};
