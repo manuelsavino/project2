@@ -3,14 +3,16 @@
     <form class="form-inline">
         <div class="form-group">
             <i class="fa fa-search"></i>
-            <input class="form-control noOutline border-0" type="text" id="searchTextField" autocomplete="on">
+            <input class="form-control noOutline border-0" type="text" id="searchTextField">
         </div>
-        <div class="form-check">
+        <!-- <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" checked>
                 <label class="form-check-label" for="defaultCheck1">
                   Show around me
                 </label>
-              </div>
+              </div> -->
+
+        <button type="submit" id="search" class="btn btn-primary">Search</button>
     </form>
         <div class="row mt-2">
             <div class="col-md-4 p-0 results center-block">
@@ -235,7 +237,7 @@
 
 
 
-                var fire = "https://i.imgur.com/gMz9WrT.png"
+                var fire = "/styles/img/pin.png";
                 for (count = 0; count < markers.length; count++) {
                     marker = new google.maps.Marker({
                         position: new google.maps.LatLng(markers[count][1], markers[count][2]),

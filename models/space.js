@@ -57,8 +57,8 @@ module.exports = function (sequelize, DataTypes){
                     model: sequelize.models.Feature
                 }
             ]
-        })
-    }
+        });
+    };
     
     return Space;
 };

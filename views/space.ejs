@@ -1,11 +1,46 @@
 <% include partials/header %>
-
-    <h1><%= space[0].space.type %></h1>
-    <h1><%= space[0].space.id %></h1>
-
-    <h1><%= space[0].space.description %></h1>
-
-    <h1><%= space[0].space.price %></h1>
-
-
-<% include partials/footer %>
+    <div class="container text-center">
+        <h1></h1>
+        <div class="card" style="width: 100%;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <%= space[0].type %>
+                </h5>
+                <ul class="pointsCenter">
+                    <li>
+                        Location:
+                        <%= space[0].city %>
+                    </li>
+                    <li>
+                        Size:
+                        <%= space[0].sqft %> Sq Ft.
+                    </li>
+                </ul>
+                <p class="card-text">
+                    <%= space[0].description %>
+                </p>
+ 
+                <table class="mt-2">
+                    <% for(var i=0; i < space[0].Features.length; i++){ %>
+ 
+                        <table class="features mr-2">
+                            <tr>
+                                <td><span class="fa <%= space[0].Features[i].icon %> fa-4x "></span></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <h5 class="text-center">
+                                        <%= space[0].Features[i].name %>
+                                    </h5>
+                                </td>
+                            </tr>
+                        </table>
+                        <% } %>
+                </table>
+                <a href="#" class="btn btn-primary d-block">Contact Poster (Coming Soon)</a>
+            </div>
+        </div>
+ 
+ 
+    </div>
+    <% include partials/footer %>
