@@ -16,7 +16,6 @@ module.exports = function (app) {
 
     app.get("/space/new/", function(req,res){
         res.render("newSpace")
-        // res.render("404")
     })
 
 
@@ -38,12 +37,10 @@ module.exports = function (app) {
     })
 
     app.get("/space/search", function (req, res) {
-        const {search} = req.query
+        const { search } = req.query
         const zipCodes = zipCodeSearch(search,15)
-        return db.Space.findAllByZipCode().then(spaces => {
-            res.render
+        return db.Space.findAllByZipCode(zipCodes).then(spaces => {
+            res.render("allSpaces")
         })
-    }
-
-
+    })
 }
